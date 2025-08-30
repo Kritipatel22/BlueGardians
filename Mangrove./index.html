@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Mangrove Watch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom right, #2e8b57, #4caf50);
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    p {
+      max-width: 600px;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      width: 140px;
+      height: 140px;
+      background: white;
+      color: #2e8b57;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    a i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #4caf50;
+    }
+    a:hover {
+      transform: translateY(-5px) scale(1.05);
+      background: #eaffea;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      a {
+        width: 120px;
+        height: 120px;
+        font-size: 0.9rem;
+      }
+      a i {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌱 Community Mangrove Watch</h1>
+  <p>
+    Empowering coastal communities, fishermen, and citizen scientists to protect mangroves.  
+    Report illegal cutting, dumping, and threats in real-time.
+  </p>
+  <div class="menu">
+    <a href="report.html"><i class="fa-solid fa-camera"></i> Report</a>
+    <a href="dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    <a href="leaderboard.php"><i class="fa-solid fa-trophy"></i> Leaderboard</a>
+  </div>
+</body>
+</html>
