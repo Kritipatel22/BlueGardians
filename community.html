@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>BlueGuardians - Community</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8fafb;
+        padding-top: 70px; /* Adjust based on header height */
+
+    }
+
+   /* Header */
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #4a90a4;
+        text-decoration: none;
+    }
+
+    .logo::before {
+        content: '🌊';
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 0;
+        align-items: center;
+        background: rgba(248, 250, 252, 0.8);
+        border-radius: 25px;
+        padding: 8px;
+    }
+
+    .nav-links li a {
+        color: #64748b;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 18px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nav-links li a.active,
+    .nav-links li a:hover {
+        background: white;
+        color: #4a90a4;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-links li a::before {
+        font-size: 12px;
+    }
+
+    .nav-links li:nth-child(1) a::before { content: '🏠'; }
+    .nav-links li:nth-child(2) a::before { content: '📋'; }
+    .nav-links li:nth-child(3) a::before { content: '👥'; }
+    .nav-links li:nth-child(4) a::before { content: '📊'; }
+    .nav-links li:nth-child(5) a::before { content: 'ℹ️'; }
+
+    .sign-in-btn {
+        background: #4a90a4;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        margin-left: 1rem;
+    }
+
+    .sign-in-btn:hover {
+        background: #3A7BA8;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 144, 184, 0.3);
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #4a90a4;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #4a90a4 0%, #357a8b 100%);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-btn {
+      background: white;
+      color: #4a90a4;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .stats-section {
+      background: white;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 1rem;
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #4a90a4;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .tabs-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .tabs-nav {
+      display: flex;
+      background: white;
+      border-radius: 8px 8px 0 0;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 1rem 2rem;
+      background: #e5e7eb;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .tab-btn.active {
+      background: #4a90a4;
+      color: white;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: #d1d5db;
+    }
+
+    .tab-content {
+      background: white;
+      border-radius: 0 0 8px 8px;
+      min-height: 500px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-panel {
+      display: none;
+      padding: 2rem;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .discussions-header {
+      margin-bottom: 2rem;
+    }
+
+    .discussions-header h2 {
+      font-size: 2rem;
+      color: #4a90a4;
+      margin-bottom: 0.5rem;
+    }
+
+    .discussions-header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .discussion-item {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1.5rem 0;
+      transition: background 0.3s ease;
+    }
+
+    .discussion-item:hover {
+      background: #f9fafb;
+      margin: 0 -2rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .discussion-item:last-child {
+      border-bottom: none;
+    }
+
+    .discussion-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #4a90a4;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .discussion-title:hover {
+      text-decoration: underline;
+    }
+
+    .discussion-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge.hot {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .badge.research {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .badge.projects {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .badge.policy {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .discussion-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .join-conversation {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #f0f9ff;
+      margin-top: 2rem;
+      border-radius: 8px;
+    }
+
+    .join-conversation-icon {
+      font-size: 4rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .join-conversation h3 {
+      font-size: 1.8rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .join-conversation p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .join-btn {
+      background: #4a90a4;
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .join-btn:hover {
+      background: #357a8b;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .article-card {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .article-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .article-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #4a90a4;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-excerpt {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .quiz-card {
+      background: linear-gradient(135deg, #4a90a4, #357a8b);
+      color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .quiz-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .quiz-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-description {
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-btn {
+      background: white;
+      color: #4a90a4;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: #4a90a4;
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-description {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .copyright {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .tabs-nav {
+        flex-direction: column;
+      }
+      
+      .tab-btn {
+        border-radius: 0;
+      }
+      
+      .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">BlueGuardians</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="data.html">Data</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <a href="login.html" class="sign-in-btn">Sign In</a>
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        </nav>
+    </header>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Community Hub</h1>
+        <p>Connect with researchers, conservationists, and ocean enthusiasts. Share knowledge, participate in discussions, and test your expertise.</p>
+        <a href="#community-stats" class="hero-btn">
+          👥 Join Community
+        </a>
+      </div>
+    </section>
+
+    <section class="stats-section" id="community-stats">
+      <div class="stats-container">
+        <div class="stat-item">
+          <div class="stat-icon">👥</div>
+          <div class="stat-number">2,847</div>
+          <div class="stat-label">Active Members</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">💬</div>
+          <div class="stat-number">1,234</div>
+          <div class="stat-label">Discussions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">📄</div>
+          <div class="stat-number">6</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-number">5,678</div>
+          <div class="stat-label">Quizzes Completed</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tabs-section">
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="discussions">
+          💬 Discussions
+        </button>
+        <button class="tab-btn" data-tab="articles">
+          📄 Articles
+        </button>
+        <button class="tab-btn" data-tab="quizzes">
+          🏆 Eco Quizzes
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <div class="tab-panel active" id="discussions">
+          <div class="discussions-header">
+            <h2>Forum Discussions</h2>
+            <p>Join conversations about blue carbon research, conservation, and policy</p>
+          </div>
+
+          <div class="discussions-list">
+            <div class="discussion-item">
+              <div class="discussion-badges">
+                <span class="badge hot">Hot</span>
+                <span class="badge research">Research</span>
+              </div>
+              <a href="#" class="discussion-title">Best practices for mangrove restoration</a>
+              <div class="discussion-meta">
+                <div class="meta-item">
+                  <span>👤</span>
+                  <span>Dr. Sarah Chen</span>
+                </div>
+                <div class="meta-item">
+                  <span>💬</span>
+                  <span>23 replies</span>
+                </div>
+                <div class="meta-item">
+                  <span>🕐</span>
+                  <span>2 hours ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="discussion-item">
+              <div class="discussion-badges">
+                <span class="badge projects">Projects</span>
+              </div>
+              <a href="#" class="discussion-title">Community-led seagrass monitoring program</a>
+              <div class="discussion-meta">
+                <div class="meta-item">
+                  <span>👤</span>
+                  <span>Ocean Guardians NGO</span>
+                </div>
+                <div class="meta-item">
+                  <span>💬</span>
+                  <span>15 replies</span>
+                </div>
+                <div class="meta-item">
+                  <span>🕐</span>
+                  <span>5 hours ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="discussion-item">
+              <div class="discussion-badges">
+                <span class="badge hot">Hot</span>
+                <span class="badge policy">Policy</span>
+              </div>
+              <a href="#" class="discussion-title">Carbon credit verification for blue carbon projects</a>
+              <div class="discussion-meta">
+                <div class="meta-item">
+                  <span>👤</span>
+                  <span>Mike Rodriguez</span>
+                </div>
+                <div class="meta-item">
+                  <span>💬</span>
+                  <span>31 replies</span>
+                </div>
+                <div class="meta-item">
+                  <span>🕐</span>
+                  <span>1 day ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="discussion-item">
+              <div class="discussion-badges">
+                <span class="badge research">Research</span>
+              </div>
+              <a href="#" class="discussion-title">New findings on salt marsh carbon sequestration rates</a>
+              <div class="discussion-meta">
+                <div class="meta-item">
+                  <span>👤</span>
+                  <span>Prof. Emma Thompson</span>
+                </div>
+                <div class="meta-item">
+                  <span>💬</span>
+                  <span>8 replies</span>
+                </div>
+                <div class="meta-item">
+                  <span>🕐</span>
+                  <span>3 days ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="discussion-item">
+              <div class="discussion-badges">
+                <span class="badge projects">Projects</span>
+              </div>
+              <a href="#" class="discussion-title">Seeking partners for kelp forest restoration in California</a>
+              <div class="discussion-meta">
+                <div class="meta-item">
+                  <span>👤</span>
+                  <span>Pacific Conservation Alliance</span>
+                </div>
+                <div class="meta-item">
+                  <span>💬</span>
+                  <span>12 replies</span>
+                </div>
+                <div class="meta-item">
+                  <span>🕐</span>
+                  <span>1 week ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="join-conversation">
+            <div class="join-conversation-icon">💬</div>
+            <h3>Join the Conversation</h3>
+            <p>Sign in to participate in discussions and share your insights</p>
+            <button class="join-btn">Sign In to Participate</button>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="articles">
+          <div class="discussions-header">
+            <h2>Research Articles</h2>
+            <p>Latest research and insights from the blue carbon community</p>
+          </div>
+
+          <div class="articles-grid">
+            <div class="article-card">
+              <h3 class="article-title">Blue Carbon Ecosystems: A Comprehensive Guide</h3>
+              <p class="article-excerpt">Understanding the role of coastal ecosystems in carbon sequestration and climate mitigation strategies for a sustainable future.</p>
+            </div>
+
+            <div class="article-card">
+              <h3 class="article-title">Mangrove Restoration: Lessons from Global Projects</h3>
+              <p class="article-excerpt">Analyzing successful mangrove restoration initiatives worldwide and their impact on local communities and carbon storage.</p>
+            </div>
+
+            <div class="article-card">
+              <h3 class="article-title">Seagrass Meadows: Hidden Climate Champions</h3>
+              <p class="article-excerpt">Exploring the incredible carbon storage capacity of seagrass ecosystems and their importance in marine conservation.</p>
+            </div>
+
+            <div class="article-card">
+              <h3 class="article-title">Salt Marsh Conservation: Policy and Practice</h3>
+              <p class="article-excerpt">Examining current policies and best practices for protecting and restoring salt marsh ecosystems globally.</p>
+            </div>
+
+            <div class="article-card">
+              <h3 class="article-title">Carbon Credit Markets and Blue Carbon</h3>
+              <p class="article-excerpt">Understanding how blue carbon projects can participate in carbon markets and generate sustainable financing.</p>
+            </div>
+
+            <div class="article-card">
+              <h3 class="article-title">Community-Based Conservation Success Stories</h3>
+              <p class="article-excerpt">Highlighting successful community-led conservation initiatives and their lessons for scaling blue carbon projects.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="quizzes">
+          <div class="discussions-header">
+            <h2>Eco Quizzes</h2>
+            <p>Test your knowledge about blue carbon ecosystems and conservation</p>
+          </div>
+
+          <div class="quiz-grid">
+            <div class="quiz-card">
+              <div class="quiz-icon">🌊</div>
+              <h3 class="quiz-title">Blue Carbon Basics</h3>
+              <p class="quiz-description">Test your fundamental knowledge about blue carbon ecosystems and their importance.</p>
+              <button class="quiz-btn">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-icon">🌱</div>
+              <h3 class="quiz-title">Mangrove Ecosystems</h3>
+              <p class="quiz-description">Dive deep into the world of mangroves and their role in carbon sequestration.</p>
+              <button class="quiz-btn">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-icon">🌿</div>
+              <h3 class="quiz-title">Seagrass Knowledge</h3>
+              <p class="quiz-description">Explore the fascinating world of seagrass meadows and their ecological importance.</p>
+              <button class="quiz-btn">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-icon">⚖️</div>
+              <h3 class="quiz-title">Conservation Policy</h3>
+              <p class="quiz-description">Test your understanding of policies and regulations in marine conservation.</p>
+              <button class="quiz-btn">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-icon">🔬</div>
+              <h3 class="quiz-title">Research Methods</h3>
+              <p class="quiz-description">Challenge yourself with questions about blue carbon research methodologies.</p>
+              <button class="quiz-btn">Start Quiz</button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-icon">🏆</div>
+              <h3 class="quiz-title">Expert Challenge</h3>
+              <p class="quiz-description">The ultimate test for blue carbon experts - are you ready for the challenge?</p>
+              <button class="quiz-btn">Start Quiz</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">BlueGuardians</div>
+      <p class="footer-description">Protecting Blue Carbon ecosystems through community-driven conservation, research, and sustainable practices for a healthier planet.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="community.html">Community</a>
+        <a href="data.html">Data</a>
+        <a href="about.html">About</a>
+      </div>
+      <p class="copyright">© 2024 BlueGuardians. All rights reserved. Built for ocean conservation.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-tab');
+        
+        // Remove active class from all buttons and panels
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding panel
+        btn.classList.add('active');
+        document.getElementById(targetTab).classList.add('active');
+      });
+    });
+
+    // Discussion item interactions
+    document.querySelectorAll('.discussion-title').forEach(title => {
+      title.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert(`Opening discussion: ${this.textContent}`);
+      });
+    });
+
+    // Quiz interactions
+    document.querySelectorAll('.quiz-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const quizTitle = this.closest('.quiz-card').querySelector('.quiz-title').textContent;
+        alert(`Starting quiz: ${quizTitle}`);
+      });
+    });
+
+    // Join conversation button
+    document.querySelector('.join-btn').addEventListener('click', function() {
+      alert('Redirecting to sign in page...');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Add some hover effects and animations
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate stats on scroll
+      const stats = document.querySelectorAll('.stat-number');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            const finalValue = target.textContent.replace(/,/g, '');
+            animateValue(target, 0, parseInt(finalValue), 2000);
+          }
+        });
+      });
+
+      stats.forEach(stat => observer.observe(stat));
+    });
+
+    function animateValue(obj, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = Math.floor(progress * (end - start) + start);
+        obj.textContent = current.toLocaleString();
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+  </script>
+</body>
+</html>

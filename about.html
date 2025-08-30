@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>BlueGuardians - About</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f8fafc;
+  padding-top: 70px; /* Adjust based on header height */
+
+    }
+
+ /* Header */
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #4a90a4;
+        text-decoration: none;
+    }
+
+    .logo::before {
+        content: '🌊';
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 0;
+        align-items: center;
+        background: rgba(248, 250, 252, 0.8);
+        border-radius: 25px;
+        padding: 8px;
+    }
+
+    .nav-links li a {
+        color: #64748b;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 18px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nav-links li a.active,
+    .nav-links li a:hover {
+        background: white;
+        color: #4a90a4;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-links li a::before {
+        font-size: 12px;
+    }
+
+    .nav-links li:nth-child(1) a::before { content: '🏠'; }
+    .nav-links li:nth-child(2) a::before { content: '📋'; }
+    .nav-links li:nth-child(3) a::before { content: '👥'; }
+    .nav-links li:nth-child(4) a::before { content: '📊'; }
+    .nav-links li:nth-child(5) a::before { content: 'ℹ️'; }
+
+    .sign-in-btn {
+        background: #4a90a4;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        margin-left: 1rem;
+    }
+
+    .sign-in-btn:hover {
+        background: #3A7BA8;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 144, 184, 0.3);
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #4a90a4;
+    }
+
+
+    .hero {
+      background: linear-gradient(135deg, #4a90a4 0%, #4a90a4 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .hero-btn {
+      background: white;
+      color: #4a90a4;
+      padding: 0.8rem 2rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-btn:hover {
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 4rem 0;
+    }
+
+    .mission-section {
+      background: white;
+    }
+
+    .mission-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .mission-text h2 {
+      font-size: 2.5rem;
+      color: #4a90a4;
+      margin-bottom: 2rem;
+    }
+
+    .mission-text p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #64748b;
+    }
+
+    .mission-image {
+      border-radius: 16px;
+      overflow: hidden;
+      height: 300px;
+      background: linear-gradient(45deg, #10b981, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .stats-section {
+      background: #f1f5f9;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #4a90a4;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-desc {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .features-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .features-subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: #64748b;
+      margin-bottom: 1.5rem;
+    }
+
+    .sponsors-section {
+      background: white;
+    }
+
+    .sponsors-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .sponsors-subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 3rem;
+    }
+
+    .sponsors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .sponsor-card {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      transition: transform 0.3s ease;
+    }
+
+    .sponsor-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .sponsor-logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .sponsor-tier {
+      background: #4a90a4;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .sponsor-card h4 {
+      font-size: 1.25rem;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .sponsor-card p {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .approach-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .approach-list li {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      color: #64748b;
+    }
+
+    .approach-list li::before {
+      content: "🌐";
+      margin-right: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .approach-list li:nth-child(2)::before {
+      content: "👥";
+    }
+
+    .approach-list li:nth-child(3)::before {
+      content: "📊";
+    }
+
+    footer {
+      background: #1e293b;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .mission-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .stats-grid,
+      .features-grid,
+      .sponsors-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Color schemes for different elements */
+    .stat-icon.globe { background: #dbeafe; color: #3b82f6; }
+    .stat-icon.leaf { background: #dcfce7; color: #16a34a; }
+    .stat-icon.users { background: #fef3c7; color: #d97706; }
+    .stat-icon.heart { background: #fce7f3; color: #ec4899; }
+
+    .feature-icon.storage { background: #dcfce7; color: #16a34a; }
+    .feature-icon.protection { background: #dbeafe; color: #3b82f6; }
+
+    .sponsor-logo.ocean { background: #fef3c7; color: #d97706; }
+    .sponsor-logo.eco { background: #dcfce7; color: #16a34a; }
+    .sponsor-logo.coastal { background: #dbeafe; color: #4a90a4; }
+    .sponsor-logo.horizon { background: #e0f2fe; color: #0891b2; }
+    .sponsor-logo.seagrass { background: #f0fdf4; color: #059669; }
+    .sponsor-logo.coral { background: #ecfdf5; color: #10b981; }
+    .sponsor-logo.alliance { background: #e0f2fe; color: #0284c7; }
+    .sponsor-logo.wetlands { background: #f0f9ff; color: #0369a1; }
+    .sponsor-logo.marine { background: #eff6ff; color: #4a90a4; }
+
+    .tier-platinum { background: #64748b; }
+    .tier-gold { background: #f59e0b; }
+    .tier-silver { background: #6b7280; }
+    .tier-bronze { background: #92400e; }
+    .tier-partner { background: #7c3aed; }
+  </style>
+</head>
+<body>
+  <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">BlueGuardians</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="data.html">Data</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <a href="login.html" class="sign-in-btn">Sign In</a>
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        </nav>
+    </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>About BlueGuardians</h1>
+        <p>We're on a mission to protect and restore blue carbon ecosystems through community-driven conservation, cutting-edge research, and global collaboration.</p>
+        <a href="#mission" class="hero-btn">📖 Learn Our Mission</a>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section mission-section" id="mission">
+      <div class="container">
+        <div class="mission-content">
+          <div class="mission-text">
+            <h2>Our Mission</h2>
+            <p>Blue carbon ecosystems—mangroves, salt marshes, and seagrass beds—are among the most effective natural carbon sinks on Earth. Despite covering less than 2% of the ocean floor, they store up to 50% of all carbon buried in marine sediments.</p>
+            <p>BlueGuardians brings together researchers, NGOs, communities, and individuals to protect these vital ecosystems through data-driven conservation, community engagement, and sustainable funding mechanisms.</p>
+            <ul class="approach-list">
+              <li>Global conservation network</li>
+              <li>Community-driven initiatives</li>
+              <li>Data-driven impact measurement</li>
+            </ul>
+          </div>
+          <div class="mission-image">
+            🌿🌊
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section stats-section">
+      <div class="container">
+        <h2>Our Impact</h2>
+        <p>Together, we're making a measurable difference in protecting our blue planet</p>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon globe">🌍</div>
+            <div class="stat-number">25,847</div>
+            <div class="stat-label">hectares</div>
+            <div class="stat-desc">Of blue carbon ecosystems under protection</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon leaf">🌱</div>
+            <div class="stat-number">1.2M</div>
+            <div class="stat-label">kg CO₂ Absorbed</div>
+            <div class="stat-desc">Carbon captured this year alone</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon users">👥</div>
+            <div class="stat-number">2,847</div>
+            <div class="stat-label">Community Members</div>
+            <div class="stat-desc">Researchers, NGOs, and conservationists</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon heart">❤️</div>
+            <div class="stat-number">142</div>
+            <div class="stat-label">Active Projects</div>
+            <div class="stat-desc">Conservation initiatives worldwide</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-section">
+      <div class="container">
+        <h2>Why Blue Carbon Matters</h2>
+        <p class="features-subtitle">Understanding the critical role of coastal ecosystems in climate regulation</p>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon storage">📈</div>
+            <h3>Carbon Storage Champions</h3>
+            <p>Blue carbon ecosystems store 3-5 times more carbon per hectare than tropical rainforests</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon protection">🌊</div>
+            <h3>Coastal Protection</h3>
+            <p>These ecosystems protect coastlines from storms, erosion, and sea-level rise</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon storage">⚡</div>
+            <h3>Rapid Carbon Capture</h3>
+            <p>Seagrass beds absorb carbon 35 times faster than tropical rainforests</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon protection">🔒</div>
+            <h3>Long-term Storage</h3>
+            <p>Carbon stored in coastal sediments can remain locked away for thousands of years</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section class="section sponsors-section">
+      <div class="container">
+        <h2>Our Sponsors</h2>
+        <p class="sponsors-subtitle">Grateful for the support of organizations committed to ocean conservation</p>
+        
+        <div class="sponsors-grid">
+          <div class="sponsor-card">
+            <div class="sponsor-logo ocean">🌊</div>
+            <span class="sponsor-tier tier-platinum">Platinum</span>
+            <h4>Ocean Guardians Foundation</h4>
+            <p>A global foundation dedicated to protecting marine ecosystems and promoting...</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo eco">🌍</div>
+            <span class="sponsor-tier tier-gold">Gold</span>
+            <h4>EcoTech Solutions</h4>
+            <p>Leading technology company committed to carbon neutrality and supporting innovative...</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo coastal">🏝️</div>
+            <span class="sponsor-tier tier-gold">Gold</span>
+            <h4>Coastal Restoration Institute</h4>
+            <p>Dedicated to restoring and preserving coastal habitats, including vital mangrove and...</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo horizon">🚢</div>
+            <span class="sponsor-tier tier-silver">Silver</span>
+            <h4>Blue Horizon Eco-Tours</h4>
+            <p>A local eco-tourism operator offering sustainable tours and educational...</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo seagrass">🌱</div>
+            <span class="sponsor-tier tier-bronze">Bronze</span>
+            <h4>Seagrass Saviors</h4>
+            <p>Specializes in the restoration and protection of seagrass meadows, recognizing their critical role...</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo coral">🐠</div>
+            <span class="sponsor-tier tier-partner">Community Partner</span>
+            <h4>University of Marine Sciences</h4>
+            <p>A university department focused on marine biology and environmental science...</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partner Organizations -->
+    <section class="section" style="background: #f1f5f9;">
+      <div class="container">
+        <h2 style="text-align: center; font-size: 2.5rem; color: #4a90a4; margin-bottom: 1rem;">Partner Organizations</h2>
+        <p style="text-align: center; color: #64748b; margin-bottom: 3rem;">Working together with leading NGOs to maximize conservation impact</p>
+        
+        <div class="sponsors-grid">
+          <div class="sponsor-card">
+            <div class="sponsor-logo alliance">🤝</div>
+            <h4>Ocean Care Alliance</h4>
+            <p>Dedicated to protecting and restoring marine ecosystems worldwide through advocacy, research, and community engagement</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo wetlands">💧</div>
+            <h4>Coastal Wetlands Trust</h4>
+            <p>Focuses on the conservation and restoration of vital coastal wetlands, including mangroves and salt marshes, for their ecological and carbon sequestration benefits</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+          
+          <div class="sponsor-card">
+            <div class="sponsor-logo marine">🐙</div>
+            <h4>Marine Life Protectors</h4>
+            <p>Works to safeguard marine biodiversity and habitats, promoting sustainable practices and combating ocean pollution</p>
+            <a href="#" class="btn-outline">🔗 Visit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="hero" style="padding: 3rem 2rem;">
+      <div class="container">
+        <h2>Join the Blue Revolution</h2>
+        <p>Every action counts in protecting our blue carbon ecosystems. Together, we can create a sustainable future for our oceans.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+          <a href="projects.html" class="hero-btn"> Explore Projects</a>
+          <a href="community.html" class="hero-btn">Join Community</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2024 BlueGuardians. All rights reserved. Built for ocean conservation.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add entrance animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.stat-card, .feature-card, .sponsor-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>

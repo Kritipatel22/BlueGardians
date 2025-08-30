@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>BlueGuardians - Projects</title>
+   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8fafb;
+  padding-top: 70px; /* Adjust based on header height */
+
+    }
+
+        header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        height: 100;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #4a90a4;
+        text-decoration: none;
+    }
+
+    .logo::before {
+        content: '🌊';
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 0;
+        align-items: center;
+        background: rgba(248, 250, 252, 0.8);
+        border-radius: 25px;
+        padding: 8px;
+    }
+
+    .nav-links li a {
+        color: #64748b;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 18px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nav-links li a.active,
+    .nav-links li a:hover {
+        background: white;
+        color: #4a90a4;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-links li a::before {
+        font-size: 12px;
+    }
+
+    .nav-links li:nth-child(1) a::before { content: '🏠'; }
+    .nav-links li:nth-child(2) a::before { content: '📋'; }
+    .nav-links li:nth-child(3) a::before { content: '👥'; }
+    .nav-links li:nth-child(4) a::before { content: '📊'; }
+    .nav-links li:nth-child(5) a::before { content: 'ℹ️'; }
+
+    .sign-in-btn {
+        background: #4a90a4;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        margin-left: 1rem;
+    }
+
+    .sign-in-btn:hover {
+        background: #3A7BA8;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 144, 184, 0.3);
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #4a90a4;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #4a90a4 0%, #357a8b 100%);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .hero-btn {
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .hero-btn.primary {
+      background: white;
+      color: #4a90a4;
+    }
+
+    .hero-btn.secondary {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .map-section {
+      background: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .map-section h2 {
+      font-size: 2.5rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .map-section p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 3rem;
+    }
+
+    .map-container {
+      background: #f0f8ff;
+      border: 2px dashed #4a90a4;
+      border-radius: 12px;
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .map-icon {
+      font-size: 4rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .map-placeholder h3 {
+      font-size: 1.8rem;
+      color: #4a90a4;
+      margin-bottom: 1rem;
+    }
+
+    .map-placeholder p {
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+
+ 
+    #map {
+      height: 500px;
+      border-radius: 12px;
+    }
+
+
+    .projects-section {
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      padding: 0.8rem 1rem 0.8rem 2.5rem;
+      border: 2px solid #e1e5e9;
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 300px;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #4a90a4;
+    }
+
+    .search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+
+    .filter-dropdown {
+      position: relative;
+    }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: white;
+      border: 2px solid #e1e5e9;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: #4a90a4;
+    }
+
+    .projects-count {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .project-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .project-status {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status-active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-completed {
+      background: #cce5ff;
+      color: #004085;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #4a90a4;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-location {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .project-location::before {
+      content: '📍';
+    }
+
+    .project-description {
+      color: #555;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .project-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-item {
+      font-size: 0.9rem;
+    }
+
+    .detail-label {
+      color: #666;
+      font-weight: 500;
+    }
+
+    .detail-value {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .co2-impact {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .project-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .view-details-btn {
+      background: #4a90a4;
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      flex: 1;
+      margin-right: 1rem;
+    }
+
+    .view-details-btn:hover {
+      background: #357a8b;
+    }
+
+    .favorite-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #ccc;
+      transition: color 0.3s ease;
+    }
+
+    .favorite-btn:hover,
+    .favorite-btn.active {
+      color: #e74c3c;
+    }
+
+    footer {
+      background: #4a90a4;
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-description {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .copyright {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-box input {
+        width: 250px;
+      }
+      
+      .projects-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+   <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">BlueGuardians</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="data.html">Data</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <a href="login.html" class="sign-in-btn">Sign In</a>
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        </nav>
+    </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Conservation Projects</h1>
+        <p>Discover and support Blue Carbon conservation projects around the world. Each project contributes to protecting our ocean ecosystems and fighting climate change.</p>
+        <div class="hero-buttons">
+          <a href="#projects" class="hero-btn primary">📍 Explore Projects</a>
+          <a href="#community" class="hero-btn primary">👥 Join Community</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="map-section">
+      <h2>Global Project Map</h2>
+      <p>Explore conservation projects worldwide and see their real-time impact</p>
+      
+      <div class="map-container">
+  <div id="map" style="height: 500px; border-radius: 12px;"></div>
+</div>
+
+    <section class="projects-section" id="projects">
+      <div class="projects-header">
+        <div class="search-filter">
+          <div class="search-box">
+            <input type="text" placeholder="Search projects..." id="searchInput">
+          </div>
+          <div class="filter-dropdown">
+            <button class="filter-btn">
+              <span>🔽</span>
+              <span>All Projects</span>
+            </button>
+          </div>
+        </div>
+        <div class="projects-count">6 projects found</div>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22><rect fill=%22%2334a853%22 width=%22400%22 height=%22200%22/><circle fill=%22%234a90a4%22 cx=%22200%22 cy=%22100%22 r=%2280%22 opacity=%220.7%22/></svg>')">
+            <div class="project-status status-active">Active</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Sundarbans Mangrove Restoration</h3>
+            <div class="project-location">Sundarbans, Bangladesh</div>
+            <p class="project-description">Restoration of degraded mangrove forests along the coast to enhance biodiversity and carbon sequestration.</p>
+            <div class="project-details">
+              <div class="detail-item">
+                <div class="detail-label">NGO:</div>
+                <div class="detail-value">Ocean Guardians Alliance</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">CO₂ Impact:</div>
+                <div class="detail-value co2-impact">↗ 12,500 kg</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Duration:</div>
+                <div class="detail-value">15/03/2023 - 31/12/2028</div>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="view-details-btn">View Details</button>
+              <button class="favorite-btn">♡</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22><rect fill=%22%234a90a4%22 width=%22400%22 height=%22200%22/><rect fill=%22%2322c55e%22 x=%2250%22 y=%22120%22 width=%22300%22 height=%2280%22/></svg>')">
+            <div class="project-status status-active">Active</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Florida Seagrass Revival</h3>
+            <div class="project-location">Florida Keys, USA</div>
+            <p class="project-description">Protection and expansion of seagrass beds crucial for marine life and significant carbon sinks.</p>
+            <div class="project-details">
+              <div class="detail-item">
+                <div class="detail-label">NGO:</div>
+                <div class="detail-value">Coastal Conservation Trust</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">CO₂ Impact:</div>
+                <div class="detail-value co2-impact">↗ 8,750 kg</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Duration:</div>
+                <div class="detail-value">20/01/2024 - 30/06/2027</div>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="view-details-btn">View Details</button>
+              <button class="favorite-btn">♡</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22><rect fill=%22%23d4a574%22 width=%22400%22 height=%22200%22/><path fill=%22%23f4f4f4%22 d=%22M100 80 Q200 60 300 80 Q250 120 200 100 Q150 120 100 80%22/></svg>')">
+            <div class="project-status status-completed">Completed</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Essex Salt Marsh Rebirth</h3>
+            <div class="project-location">Essex Coast, UK</div>
+            <p class="project-description">Community-led initiative to restore salt marsh ecosystems, providing natural coastal defense and carbon storage.</p>
+            <div class="project-details">
+              <div class="detail-item">
+                <div class="detail-label">NGO:</div>
+                <div class="detail-value">Blue Planet Foundation</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">CO₂ Impact:</div>
+                <div class="detail-value co2-impact">↗ 5,200 kg</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Duration:</div>
+                <div class="detail-value">01/07/2022 - 01/09/2026</div>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="view-details-btn">View Details</button>
+              <button class="favorite-btn">♡</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22><rect fill=%22%23059669%22 width=%22400%22 height=%22200%22/><circle fill=%22%2322c55e%22 cx=%22150%22 cy=%2280%22 r=%2240%22 opacity=%220.8%22/><circle fill=%22%2322c55e%22 cx=%22250%22 cy=%22120%22 r=%2250%22 opacity=%220.6%22/></svg>')">
+            <div class="project-status status-active">Active</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Pacific Kelp Forest Recovery</h3>
+            <div class="project-location">California Coast, USA</div>
+            <p class="project-description">Large-scale kelp forest restoration to rebuild marine ecosystems and enhance carbon absorption capacity.</p>
+            <div class="project-details">
+              <div class="detail-item">
+                <div class="detail-label">NGO:</div>
+                <div class="detail-value">Global Ocean Conservancy</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">CO₂ Impact:</div>
+                <div class="detail-value co2-impact">↗ 15,000 kg</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Duration:</div>
+                <div class="detail-value">10/05/2025 - 01/11/2030</div>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="view-details-btn">View Details</button>
+              <button class="favorite-btn">♡</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22><rect fill=%22%2306b6d4%22 width=%22400%22 height=%22200%22/><rect fill=%22%2322c55e%22 x=%2280%22 y=%22140%22 width=%22240%22 height=%2260%22 rx=%2210%22/></svg>')">
+            <div class="project-status status-active">Active</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Mediterranean Posidonia Protection</h3>
+            <div class="project-location">Balearic Islands, Spain</div>
+            <p class="project-description">Protecting and restoring Posidonia oceanica meadows, vital for Mediterranean marine biodiversity and carbon storage.</p>
+            <div class="project-details">
+              <div class="detail-item">
+                <div class="detail-label">NGO:</div>
+                <div class="detail-value">Marine Ecosystems Now</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">CO₂ Impact:</div>
+                <div class="detail-value co2-impact">↗ 3,100 kg</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Duration:</div>
+                <div class="detail-value">01/02/2024 - 30/04/2025</div>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="view-details-btn">View Details</button>
+              <button class="favorite-btn">♡</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22><rect fill=%22%23047857%22 width=%22400%22 height=%22200%22/><ellipse fill=%22%2334a853%22 cx=%22200%22 cy=%22100%22 rx=%22120%22 ry=%2260%22 opacity=%220.7%22/></svg>')">
+            <div class="project-status status-active">Active</div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Wadden Sea Restoration</h3>
+            <div class="project-location">North Sea Coast, Netherlands</div>
+            <p class="project-description">Comprehensive restoration of wetland habitats in the Wadden Sea UNESCO World Heritage site for enhanced carbon sequestration.</p>
+            <div class="project-details">
+              <div class="detail-item">
+                <div class="detail-label">NGO:</div>
+                <div class="detail-value">Wetlands International</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">CO₂ Impact:</div>
+                <div class="detail-value co2-impact">↗ 9,800 kg</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Duration:</div>
+                <div class="detail-value">01/01/2026 - 20/03/2029</div>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="view-details-btn">View Details</button>
+              <button class="favorite-btn">♡</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">BlueGuardians</div>
+      <p class="footer-description">Protecting Blue Carbon ecosystems through community-driven conservation, research, and sustainable practices for a healthier planet.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="community.html">Community</a>
+        <a href="data.html">Data</a>
+        <a href="about.html">About</a>
+      </div>
+      <p class="copyright">© 2024 BlueGuardians. All rights reserved. Built for ocean conservation.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectsCount = document.querySelector('.projects-count');
+
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      let visibleProjects = 0;
+
+      projectCards.forEach(card => {
+        const title = card.querySelector('.project-title').textContent.toLowerCase();
+        const location = card.querySelector('.project-location').textContent.toLowerCase();
+        const description = card.querySelector('.project-description').textContent.toLowerCase();
+
+        if (title.includes(searchTerm) || location.includes(searchTerm) || description.includes(searchTerm)) {
+          card.style.display = 'block';
+          visibleProjects++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      projectsCount.textContent = `${visibleProjects} projects found`;
+    });
+
+    // Favorite functionality
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if (this.classList.contains('active')) {
+          this.innerHTML = '♡';
+          this.classList.remove('active');
+        } else {
+          this.innerHTML = '♥';
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // View details functionality
+    document.querySelectorAll('.view-details-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const projectTitle = this.closest('.project-card').querySelector('.project-title').textContent;
+        alert(`Opening detailed view for: ${projectTitle}`);
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+<script>
+    // Initialize map
+    var map = L.map('map');
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Projects (matching the project cards in your HTML)
+    var projects = [
+      { name: "Sundarbans Mangrove Restoration", location: "Bangladesh", coords: [22.0, 89.0] },
+      { name: "Florida Seagrass Revival", location: "Florida Keys, USA", coords: [24.5, -81.7] },
+      { name: "Essex Salt Marsh Rebirth", location: "Essex Coast, UK", coords: [51.8, 1.0] },
+      { name: "Pacific Kelp Forest Recovery", location: "California Coast, USA", coords: [36.6, -121.9] },
+      { name: "Mediterranean Posidonia Protection", location: "Balearic Islands, Spain", coords: [39.6, 2.9] },
+      { name: "Wadden Sea Restoration", location: "North Sea Coast, Netherlands", coords: [53.2, 5.6] }
+    ];
+
+    // Add markers
+    var markers = projects.map(function(proj) {
+      return L.marker(proj.coords)
+        .addTo(map)
+        .bindPopup("<b>" + proj.name + "</b><br>" + proj.location);
+    });
+
+    // Fit map to show all markers
+    var bounds = projects.map(p => p.coords);
+    map.fitBounds(bounds);
+  </script>
+
+</body>
+</html>
